@@ -33,6 +33,3 @@ if __name__ ==  "__main__":
     ax1.plot(Frequency, Zins.real)
     ax1.plot(Frequency, Zino.real)
     plt.show()
-
-
-# Zino = 50 / np.tanh(complex * length)

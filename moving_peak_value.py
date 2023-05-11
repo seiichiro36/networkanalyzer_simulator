@@ -1,12 +1,3 @@
-
-# Zino_peaks = peaks_Zino
-# Zins_peaks = peaks_Zins
-# peaks_Zino_actual = peaks_Zino_actual
-# peaks_Zins_actual = peaks_Zins_actual
-
-# if __name__ == "__main__":
-
-#     plt.show()
 from matplotlib.ticker import ScalarFormatter
 import numpy as np
 import matplotlib.pyplot as plt
@@ -52,6 +43,8 @@ actual_data = np.log(10 ** (abs(actual_data)/20))/length
 
 actual_data = actual_data.values
 
+
+
 # 伝搬定数
 complex = (actual_data).flatten() + np.array(beta) * 1j
 
@@ -78,14 +71,14 @@ peak_Zins_real_actual = short_complex_data_real[peaks_Zins_actual]
 
 
 # グラフをプロット
-ax.plot(Frequency, Zino_real)  
-ax.plot(Frequency, Zins_real)  
-ax.plot(Frequency, open_complex_data_real)  
-ax.plot(Frequency, short_complex_data_real)  
-ax.plot(peak_Frequency_of_Zino, peak_Zino_real, 'x')
-ax.plot(peak_Frequency_of_Zins, peak_Zins_real, 'x')
-ax.plot(peak_Frequency_of_Zino_actual, peak_Zino_real_actual, 'o')
-ax.plot(peak_Frequency_of_Zins_actual, peak_Zins_real_actual, 'o')
+ax.plot(Frequency, Zino_real, color="red")  
+ax.plot(Frequency, Zins_real, color="blue")  
+ax.plot(Frequency, open_complex_data_real, color="red", linestyle="dotted")  
+ax.plot(Frequency, short_complex_data_real, color="blue", linestyle="dotted")  
+ax.plot(peak_Frequency_of_Zino, peak_Zino_real, 'x', color="red")
+ax.plot(peak_Frequency_of_Zins, peak_Zins_real, 'x', color="blue")
+ax.plot(peak_Frequency_of_Zino_actual, peak_Zino_real_actual, 'o', color="red")
+ax.plot(peak_Frequency_of_Zins_actual, peak_Zins_real_actual, 'o', color="blue")
 fig.tight_layout()
 
 ax.ticklabel_format(style='plain', axis='x')
@@ -93,9 +86,13 @@ ax.ticklabel_format(style='plain', axis='x')
 ax.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
 ax.ticklabel_format(style="sci",  axis="x", scilimits=(6, 6))
 
-plt.show()
+# plt.show()
 
-# print("終端解放時送電端員ピーンダンスのピーク値",peak_Frequency_of_Zino)
-# print(peak_Frequency_of_Zino_actual)
-# print(peak_Frequency_of_Zins)
-# print(peak_Frequency_of_Zins_actual)
+# print("終端解放時送電端インピーンダンスのピーク値", Zino[peaks_Zino])
+# print("終端短絡時送電端インピーンダンスのピーク値(実測)", open_complex_data_real[peaks_Zino_actual])
+# print("終端解放時送電端インピーンダンスのピーク値", Zins[peaks_Zins])
+# print("終端短絡時送電端インピーンダンスのピーク値(実測)", short_complex_data_real[peaks_Zins_actual])
+
+print("終端解放時送電端インピーンダンスのピーク値(実測値との差)", Zino[peaks_Zino] - open_complex_data_real[peaks_Zino_actual])
+print("終端短絡時送電端インピーンダンスのピーク値(実測値との差)", Zins[peaks_Zins] - short_complex_data_real[peaks_Zins_actual])
+
