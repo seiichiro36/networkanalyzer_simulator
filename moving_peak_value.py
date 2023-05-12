@@ -43,8 +43,6 @@ actual_data = np.log(10 ** (abs(actual_data)/20))/length
 
 actual_data = actual_data.values
 
-
-
 # 伝搬定数
 complex = (actual_data).flatten() + np.array(beta) * 1j
 
@@ -86,13 +84,25 @@ ax.ticklabel_format(style='plain', axis='x')
 ax.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
 ax.ticklabel_format(style="sci",  axis="x", scilimits=(6, 6))
 
-# plt.show()
+# print("終端解放時送電端インピーンダンスのピーク値", Zino[peaks_Zino])
+# print("終端短絡時送電端インピーンダンスのピーク値(実測)", open_complex_data[peaks_Zino_actual])
+# print("終端解放時送電端インピーンダンスのピーク値", Zins[peaks_Zins])
+# print("終端短絡時送電端インピーンダンスのピーク値(実測)", short_complex_data[peaks_Zins_actual])
+
+# print("終端解放時送電端インピーンダンスのピーク値(実測値との差)", open_complex_data[peaks_Zino_actual] - Zino[peaks_Zino])
+# print("終端短絡時送電端インピーンダンスのピーク値(実測値との差)", short_complex_data[peaks_Zins_actual] - Zins[peaks_Zins])
 
 # print("終端解放時送電端インピーンダンスのピーク値", Zino[peaks_Zino])
-# print("終端短絡時送電端インピーンダンスのピーク値(実測)", open_complex_data_real[peaks_Zino_actual])
+# print("終端短絡時送電端インピーンダンスのピーク値(実測)", open_complex_data[peaks_Zino_actual])
 # print("終端解放時送電端インピーンダンスのピーク値", Zins[peaks_Zins])
-# print("終端短絡時送電端インピーンダンスのピーク値(実測)", short_complex_data_real[peaks_Zins_actual])
+# print("終端短絡時送電端インピーンダンスのピーク値(実測)", short_complex_data[peaks_Zins_actual])
 
-print("終端解放時送電端インピーンダンスのピーク値(実測値との差)", Zino[peaks_Zino] - open_complex_data_real[peaks_Zino_actual])
-print("終端短絡時送電端インピーンダンスのピーク値(実測値との差)", Zins[peaks_Zins] - short_complex_data_real[peaks_Zins_actual])
+peak_value_difference_list_of_Zino = open_complex_data[peaks_Zino_actual] - Zino[peaks_Zino]
+peak_value_difference_list_of_Zins = short_complex_data[peaks_Zins_actual] - Zins[peaks_Zins]
 
+# print("終端解放時送電端インピーンダンスのピーク値(実測値との差)", peak_value_difference_list_of_Zino)
+# print("終端短絡時送電端インピーンダンスのピーク値(実測値との差)", peak_value_difference_list_of_Zins)
+
+# plt.show()
+
+    
