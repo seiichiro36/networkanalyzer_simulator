@@ -5,6 +5,8 @@ import pandas as pd
 from scipy.signal import find_peaks
 
 from measurements_transform import Open, Short
+from graph import difference_propagation
+from graph import difference_phase
 
 fig = plt.figure(figsize=(7, 5))
 
@@ -38,13 +40,13 @@ beta = omega * np.sqrt(C * L)
 
 # 伝送法による減衰比(10.8mのケーブルを使用)
 actual_data = pd.read_csv("TRANSMISSION.CSV", usecols=[0], header=None)
-
 actual_data = np.log(10 ** (abs(actual_data)/20))/length
-
 actual_data = actual_data.values
 
-# 伝搬定数
-complex = (actual_data).flatten() + np.array(beta) * 1j
+
+
+# # 伝搬定数
+complex = actual_data.flatten() + difference_propagation + (np.array(beta) + difference_phase) * 1j 
 
 # 教科書より、終端解放時と短絡時の送電端インピーダンスをそれぞれ出力
 Zino = 50 / np.tanh(complex * length)
@@ -84,25 +86,13 @@ ax.ticklabel_format(style='plain', axis='x')
 ax.xaxis.set_major_formatter(ScalarFormatter(useMathText=True))
 ax.ticklabel_format(style="sci",  axis="x", scilimits=(6, 6))
 
-# print("終端解放時送電端インピーンダンスのピーク値", Zino[peaks_Zino])
-# print("終端短絡時送電端インピーンダンスのピーク値(実測)", open_complex_data[peaks_Zino_actual])
-# print("終端解放時送電端インピーンダンスのピーク値", Zins[peaks_Zins])
-# print("終端短絡時送電端インピーンダンスのピーク値(実測)", short_complex_data[peaks_Zins_actual])
-
-# print("終端解放時送電端インピーンダンスのピーク値(実測値との差)", open_complex_data[peaks_Zino_actual] - Zino[peaks_Zino])
-# print("終端短絡時送電端インピーンダンスのピーク値(実測値との差)", short_complex_data[peaks_Zins_actual] - Zins[peaks_Zins])
-
-# print("終端解放時送電端インピーンダンスのピーク値", Zino[peaks_Zino])
-# print("終端短絡時送電端インピーンダンスのピーク値(実測)", open_complex_data[peaks_Zino_actual])
-# print("終端解放時送電端インピーンダンスのピーク値", Zins[peaks_Zins])
-# print("終端短絡時送電端インピーンダンスのピーク値(実測)", short_complex_data[peaks_Zins_actual])
-
 peak_value_difference_list_of_Zino = open_complex_data[peaks_Zino_actual] - Zino[peaks_Zino]
 peak_value_difference_list_of_Zins = short_complex_data[peaks_Zins_actual] - Zins[peaks_Zins]
 
-# print("終端解放時送電端インピーンダンスのピーク値(実測値との差)", peak_value_difference_list_of_Zino)
-# print("終端短絡時送電端インピーンダンスのピーク値(実測値との差)", peak_value_difference_list_of_Zins)
+print("終端解放時送電端インピーンダンスのピーク値(実測値との差)", peak_value_difference_list_of_Zino)
+print("終端短絡時送電端インピーンダンスのピーク値(実測値との差)", peak_value_difference_list_of_Zins)
 
-# plt.show()
+
+plt.show()
 
     
