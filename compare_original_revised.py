@@ -5,8 +5,8 @@ import pandas as pd
 from scipy.signal import find_peaks
 
 from measurements_transform import Open, Short
-from graph import difference_propagation
-from graph import difference_phase
+from compare_propagation_constant import difference_damping
+from compare_propagation_constant import difference_phase
 
 fig = plt.figure(figsize=(7, 5))
 
@@ -45,7 +45,7 @@ actual_data = actual_data.values
 
 # # 伝搬定数
 gamma = actual_data.flatten() + (np.array(beta)) * 1j
-gamma_revise = actual_data.flatten() + difference_propagation + (np.array(beta) + difference_phase) * 1j 
+gamma_revise = actual_data.flatten() + difference_damping + (np.array(beta) + difference_phase) * 1j 
 
 # 教科書より、終端解放時と短絡時の送電端インピーダンスをそれぞれ出力
 Zino = 50 / np.tanh(gamma * length)

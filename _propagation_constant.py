@@ -35,7 +35,3 @@ class Propagation_constant:
             propagation_constant).imag
               
         return propagation_constant_real, propagation_constant_imag
-    
-# data = Propagation_constant(open_complex_data[2], short_complex_data[2], length)
-
-# Data = data.propagation_constant()

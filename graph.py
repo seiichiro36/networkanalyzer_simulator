@@ -3,8 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from graph_phase import phase_constant_linear
+from graph_phase import phase_constant_linear, linear_transform
 from measurements_transform import Open, Short
+from _propagation_constant import Propagation_constant
 
 
 # 終端、解放時と短絡時の送電端インピーダンスの波形データ
@@ -39,7 +40,7 @@ actual_data = actual_data.values
 # 伝搬定数
 gamma = (actual_data).flatten() + np.array(beta) * 1j
 
-z = short_gamma_data / 50
+z = 50 / open_gamma_data
 x = 1 / 2 * np.log((1 + z) / (1 - z)) / 10.8
 
 difference_propagation = (actual_data).flatten() - x.real 
@@ -58,9 +59,9 @@ if __name__ == "__main__":
     ax1.plot(Frequency, x.real, color="red")
     ax1.plot(Frequency, (actual_data).flatten(), color="blue")
     ax1.plot(Frequency, (actual_data).flatten() - x.real, color="green")
-    ax2.plot(Frequency, phase_constant_linear, color="red")
+    ax2.plot(Frequency, linear_transform(x.imag), color="red")
     ax2.plot(Frequency, np.array(beta), color="blue")
-    ax2.plot(Frequency, phase_constant_linear - np.array(beta), color="green")
+    ax2.plot(Frequency, linear_transform(x.imag) - np.array(beta), color="green")
 
     ax1.ticklabel_format(style='plain', axis='x')
     ax2.ticklabel_format(style='plain', axis='x')
